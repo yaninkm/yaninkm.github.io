@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ศูนย์รวมระบบ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f4f2;--fg:#141416;--mut:rgba(20,20,22,.55)}
+@media(prefers-color-scheme:dark){:root{--bg:#0e0e10;--fg:#f5f5f7;--mut:rgba(245,245,247,.55)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:var(--bg);color:var(--fg);font-family:"Noto Sans Thai",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+ background-image:radial-gradient(currentColor 1.1px,transparent 1.4px);background-size:22px 22px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;background:var(--bg);opacity:.87;pointer-events:none}
+main{position:relative;max-width:1180px;margin:0 auto;padding:56px 20px 40px}
+h1{margin:0 0 6px;font-size:28px;font-weight:600;text-align:center}
+.sub{margin:0 0 36px;text-align:center;color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px 40px;justify-items:center;align-items:end}
+.hint{position:relative;margin-top:36px;text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--mut);text-transform:uppercase}
+
+/* ---- folder ---- */
+.gf-root{--hinge:0deg;--lift:42px;--spread:0px;--fan:0deg;--stack:15px;--ease:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.34,1.36,.5,1);
+ --ink:#141416;--ink2:rgba(20,20,22,.55);position:relative;width:340px;height:392px;max-width:100%;isolation:isolate}
+.gf-root[data-tone=dark]{--ink:#f5f5f7;--ink2:rgba(245,245,247,.6)}
+.gf-root:hover,.gf-root:focus-within{--hinge:-11deg;--lift:-34px;--spread:8px;--fan:1.4deg;--stack:10px}
+.gf-root[data-open]{--hinge:-24deg;--lift:-100px;--spread:34px;--fan:4deg;--stack:40px;z-index:5}
+.gf-stage{position:absolute;left:0;top:120px;width:340px;height:272px}
+.gf-shadow{position:absolute;left:18px;right:18px;bottom:-6px;height:60px;border-radius:40px;background:rgba(16,18,24,.34);filter:blur(22px)}
+.gf-back{position:absolute;inset:0;clip-path:path('M0 56A22 22 0 0 1 22 34L146 34C170 34 172 0 198 0L318 0A22 22 0 0 1 340 22L340 250A22 22 0 0 1 318 272L22 272A22 22 0 0 1 0 250Z')}
+.gf-back::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 22%)}
+.a1{background:radial-gradient(70% 90% at 20% 20%,#e9c2b8,transparent 60%),radial-gradient(60% 80% at 85% 70%,#6f97c2,transparent 65%),linear-gradient(120deg,#f4efe9,#c2433f 45%,#22395e)}
+.a2{background:radial-gradient(70% 90% at 80% 20%,#eab08a,transparent 60%),radial-gradient(60% 80% at 15% 80%,#8f6c9c,transparent 65%),linear-gradient(120deg,#120c18,#3e2850 50%,#b3502f)}
+.a3{background:radial-gradient(60% 80% at 25% 30%,#ef4a2b,transparent 60%),radial-gradient(70% 80% at 80% 80%,#3d5f68,transparent 65%),linear-gradient(120deg,#07090c,#16252c 50%,#a3201a)}
+.gf-files{position:absolute;inset:0;z-index:5;pointer-events:none;clip-path:inset(-400px -400px 10px -400px)}
+.gf-sheet{position:absolute;left:34px;top:96px;width:272px;height:184px;border-radius:16px;overflow:hidden;pointer-events:auto;cursor:pointer;
+ display:block;text-decoration:none;color:#18181b;background:linear-gradient(180deg,#fff,#f2f2f0);transform-origin:50% 100%;
+ box-shadow:inset 0 1px 0 #fff,0 0 0 .5px rgba(0,0,0,.1),0 10px 26px -8px rgba(10,12,20,.28);
+ transform:translate(calc(var(--jx) + var(--slot)*var(--spread)),calc(var(--lift) - var(--depth)*var(--stack))) rotate(calc(var(--jr) + var(--slot)*var(--fan)));
+ transition:transform .75s var(--spring) calc(var(--depth)*40ms),box-shadow .4s}
+[data-tone=dark] .gf-sheet{color:#f4f4f5;background:linear-gradient(180deg,#2c2c30,#1c1c1f)}
+.gf-root[data-open] .gf-sheet:hover,.gf-sheet:focus-visible{transform:translate(calc(var(--jx) + var(--slot)*var(--spread)),calc(var(--lift) - var(--depth)*var(--stack) - 14px)) rotate(0);transition-delay:0s;box-shadow:0 22px 40px -12px rgba(10,12,20,.45)}
+.gf-sheet:focus-visible{outline:2px solid #4c8dff;outline-offset:2px}
+.gf-head{display:flex;flex-direction:column;gap:2px;padding:9px 14px}
+.gf-name{font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gf-url{font:10px ui-monospace,Menlo,monospace;letter-spacing:.02em;opacity:.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gf-lines{position:absolute;left:14px;right:14px;top:60px;display:grid;gap:9px}
+.gf-lines i{display:block;height:5px;border-radius:3px;background:rgba(128,128,128,.14)}
+.gf-front{position:absolute;left:0;top:74px;width:340px;height:198px;z-index:10;backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+ clip-path:path('M0 22A22 22 0 0 1 22 0L118 0C144 0 146 32 172 32L318 32A22 22 0 0 1 340 54L340 176A22 22 0 0 1 318 198L22 198A22 22 0 0 1 0 176Z');
+ transform-origin:50% 100%;transform:perspective(760px) rotateX(var(--hinge));transition:transform .8s var(--spring)}
+.gf-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.5) 42%,rgba(252,252,252,.93))}
+[data-tone=dark] .gf-tint{background:linear-gradient(180deg,rgba(18,18,20,.18),rgba(14,14,16,.62) 46%,rgba(8,8,10,.94))}
+.gf-rim{position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 2px 0 rgba(255,255,255,.8);pointer-events:none}
+.gf-hit{all:unset;position:absolute;inset:0;z-index:1;cursor:pointer}
+.gf-hit:focus-visible~.gf-label .gf-title{text-decoration:underline;text-underline-offset:4px}
+.gf-label{position:absolute;left:28px;bottom:30px;z-index:2;display:flex;flex-direction:column;gap:4px;max-width:290px;pointer-events:none;color:var(--ink)}
+.gf-title{font-size:19px;font-weight:600;line-height:1.25}
+.gf-meta{font:12px ui-monospace,Menlo,monospace;letter-spacing:.03em;color:var(--ink2)}
+@media(max-width:380px){.gf-root{zoom:.92}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:0s!important}}
+</style>
+</head>
+<body>
+<main>
+  <h1>ศูนย์รวมระบบ</h1>
+  <p class="sub">คลิกแฟ้มเพื่อเปิด แล้วเลือกระบบที่ต้องการ</p>
+  <div class="grid" id="grid"></div>
+  <p class="hint">Hover to lean · Click to open</p>
+</main>
+
+<script>
+// ===== แก้ไขลิงก์/ชื่อกลุ่มได้ที่นี่ =====
+const GROUPS = [
+  { title: "กลุ่มระบบภายในกลุ่ม", art: "a1", tone: "light", items: [
+    ["ระบบบันทึกรายงานการประชุม", "https://script.google.com/macros/s/AKfycbzIdlgg1G8mPrkWSl_0_pofao_NoAjHBh3dsGTBcr1_9Una8X4jN4VfiT_yEQ-ujRoosQ/exec"],
+    ["ระบบบันทึกการบริการข้อมูล", "https://script.google.com/macros/s/AKfycbxKAh8Rao37in3eROklEDF6I2cM-Rm5cuY-IEwdSUlvvCU5IOHlDQnnIsecVQESzXYxjg/exec"]
+  ]},
+  { title: "กลุ่มติดตามตัวชี้วัด", art: "a2", tone: "light", items: [
+    ["รายงานตชว.จังหวัด เพาะเลี้ยง + จับจืด", "https://script.google.com/macros/s/AKfycbzbvr10jgFpVLD-C3gMYl8paDIWw-izceqYfdb0zslD4WN4niz8eDXEPbYiJsqShjMECw/exec"],
+    ["รายงานตชว.จังหวัด หน่วยธุรกิจ + พื้นบ้าน", "https://script.google.com/macros/s/AKfycbwYFDtcSYs4ccE4a1EeBxn_DgSXDyl75cHTzXQHS-7IlHfDMpmkr_j90BuNoSV5qHBZvw/exec"]
+  ]},
+  { title: "ระบบอื่นๆ", art: "a3", tone: "dark", items: [
+    ["ระบบสถิติประมงสัตว์น้ำจืด", "http://facstat.fisheries.go.th:8080/fstat/administrator/index.php"],
+    ["ระบบสถิติประมงพื้นบ้าน", "https://bi.fisheries.go.th/"],
+    ["ระบบสถิติเพาะเลี้ยง", "https://stat.fisheries.go.th/aqua/admin/login"],
+    ["LBIS", "https://map.fisheries.go.th/#home"]
+  ]}
+];
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const host = u => new URL(u).host;
+const grid = document.getElementById("grid");
+
+GROUPS.forEach(g => {
+  const n = g.items.length;
+  const sheets = g.items.map(([name, url], v) => {
+    const slot = n < 2 ? 0 : (v / (n - 1)) * 2 - 1;
+    const jx = ((v * 37 % 11) - 5).toFixed(1), jr = (((v * 53 % 9) - 4) * 0.35).toFixed(2);
+    return `<a class="gf-sheet" href="${esc(url)}" target="_blank" rel="noopener noreferrer"
+      style="--slot:${slot};--depth:${n - 1 - v};--jx:${jx}px;--jr:${jr}deg;z-index:${v + 1}">
+      <span class="gf-head"><span class="gf-name">${esc(name)}</span><span class="gf-url">${esc(host(url))}</span></span>
+      <span class="gf-lines"><i style="width:86%"></i><i style="width:92%"></i><i style="width:60%"></i></span></a>`;
+  }).join("");
+  const el = document.createElement("div");
+  el.className = "gf-root";
+  el.dataset.tone = g.tone;
+  el.innerHTML = `<div class="gf-stage">
+    <div class="gf-shadow"></div>
+    <div class="gf-back ${g.art}"></div>
+    <div class="gf-files" role="list" aria-label="${esc(g.title)}" inert>${sheets}</div>
+    <div class="gf-front"><div class="gf-tint"></div><div class="gf-rim"></div>
+      <button class="gf-hit" type="button" aria-expanded="false" aria-label="เปิด ${esc(g.title)}"></button>
+      <div class="gf-label"><span class="gf-title">${esc(g.title)}</span><span class="gf-meta">${n} ระบบ</span></div>
+    </div></div>`;
+  grid.appendChild(el);
+});
+
+const roots = [...document.querySelectorAll(".gf-root")];
+function setOpen(root, on) {
+  root.toggleAttribute("data-open", on);
+  root.querySelector(".gf-hit").setAttribute("aria-expanded", on);
+  root.querySelector(".gf-files").toggleAttribute("inert", !on);
+}
+roots.forEach(r => r.querySelector(".gf-hit").addEventListener("click", () => {
+  const on = !r.hasAttribute("data-open");
+  roots.forEach(o => setOpen(o, false));
+  setOpen(r, on);
+}));
+document.addEventListener("pointerdown", e => { if (!e.target.closest(".gf-root")) roots.forEach(o => setOpen(o, false)); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") roots.forEach(o => setOpen(o, false)); });
+</script>
+</body>
+</html>
